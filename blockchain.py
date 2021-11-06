@@ -4,7 +4,6 @@ from Crypto.PublicKey import ECC
 from Crypto.Signature import DSS
 from Crypto.Hash import SHA256
 
-blockchain = None
 publickeylist = {}
 mempool = []
 
@@ -83,7 +82,8 @@ class Chain:
     
     def __verify_data(self, txdatawithsign):
         print("Verifying Transaction...")
-        self.txdatawithoutsign = str(txdatawithsign[0]) + " " + txdatawithsign[1].export_key(format='PEM') + " " + txdatawithsign[2].export_key(format='PEM')
+        self.txdatawithoutsign = str(txdatawithsign[0]) + " " + txdatawithsign[1].export_key(format='PEM') \
+            + " " + txdatawithsign[2].export_key(format='PEM')
         self.hash = SHA256.new(self.txdatawithoutsign.encode())
         self.checker = DSS.new(txdatawithsign[1], 'fips-186-3')
         try:
